@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 320px;
+      margin: 0;
+      padding: 0;
+      background-color: #030712;
+      color: #f3f4f6;
+      font-family: 'Courier New', Courier, monospace;
+      border: 1px solid #1f2937;
+    }
+    
+    .container {
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 255, 102, 0.25);
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+
+    .logo {
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: #f3f4f6;
+    }
+
+    .logo span {
+      color: #00ff66;
+      text-shadow: 0 0 5px rgba(0, 255, 102, 0.5);
+    }
+
+    .status-indicator {
+      font-size: 8px;
+      background: rgba(0, 255, 102, 0.1);
+      border: 1px solid #00ff66;
+      color: #00ff66;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+
+    .card {
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid #1f2937;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 14px;
+    }
+
+    .card-title {
+      font-size: 10px;
+      font-weight: bold;
+      color: #9ca3af;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .email-detail {
+      font-size: 11px;
+      color: #f3f4f6;
+      word-break: break-all;
+      line-height: 1.4;
+    }
+
+    .email-detail span {
+      color: #9ca3af;
+      font-weight: bold;
+    }
+
+    .btn {
+      width: 100%;
+      background: #00ff66;
+      color: #030712;
+      border: none;
+      padding: 10px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 4px;
+      text-transform: uppercase;
+      box-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: #00e5ff;
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Result styling */
+    .result-container {
+      display: none;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    .result-banner {
+      padding: 10px;
+      border-radius: 4px;
+      text-align: center;
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .result-phishing {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #ff3b30;
+      color: #ff3b30;
+      text-shadow: 0 0 6px rgba(255, 59, 48, 0.4);
+    }
+
+    .result-safe {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid #00ff66;
+      color: #00ff66;
+      text-shadow: 0 0 6px rgba(0, 255, 102, 0.4);
+    }
+
+    .risk-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 4px solid #1f2937;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 10px auto 16px auto;
+    }
+
+    .risk-circle.phishing {
+      border-color: #ff3b30;
+      box-shadow: 0 0 10px rgba(255, 59, 48, 0.2);
+    }
+
+    .risk-circle.safe {
+      border-color: #00ff66;
+      box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+    }
+
+    .risk-value {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .risk-lbl {
+      font-size: 7px;
+      color: #9ca3af;
+      text-transform: uppercase;
+    }
+
+    .reasons-list {
+      font-size: 10px;
+      color: #9ca3af;
+      padding-left: 14px;
+      margin: 6px 0 0 0;
+      line-height: 1.5;
+    }
+
+    .reasons-list li {
+      margin-bottom: 4px;
+    }
+
+    .reasons-list strong {
+      color: #f3f4f6;
+    }
+
+    /* Tabs config */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #1f2937;
+      margin-bottom: 12px;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 6px;
+      font-size: 9px;
+      color: #9ca3af;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .tab.active {
+      color: #00ff66;
+      border-bottom: 2px solid #00ff66;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .input-field {
+      width: 100%;
+      background: #090d16;
+      border: 1px solid #1f2937;
+      color: #f3f4f6;
+      padding: 6px 8px;
+      font-size: 10px;
+      box-sizing: border-box;
+      margin-top: 4px;
+      font-family: inherit;
+      border-radius: 3px;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: #00ff66;
+    }
+
+    .loader {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 11px;
+      color: #00ff66;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <div class="header">
+      <div class="logo">PHISH<span>QUEST</span></div>
+      <div class="status-indicator" id="api-status">API: READY</div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" id="tab-scan">Scan</div>
+      <div class="tab" id="tab-settings">Settings</div>
+    </div>
+
+    <!-- SCAN TAB -->
+    <div class="tab-content active" id="content-scan">
+      
+      <!-- Mail Intercept Card -->
+      <div class="card" id="mail-card">
+        <div class="card-title">Active Mail Intercept</div>
+        <div class="email-detail" id="mail-sender"><span>From:</span> Loading active window...</div>
+        <div class="email-detail" id="mail-subject" style="margin-top: 4px;"><span>Subj:</span> (No mail selected)</div>
+      </div>
+
+      <!-- Action Button -->
+      <button class="btn" id="btn-scan" disabled>INSPECT EMAIL BODY</button>
+      
+      <!-- Loading view -->
+      <div class="loader" id="scan-loader">
+        [+] RUNNING SEQUENCE DECODER...
+      </div>
+
+      <!-- Result Panel -->
+      <div class="result-container" id="result-hud">
+        <div class="risk-circle" id="result-circle">
+          <div class="risk-value" id="result-score">85%</div>
+          <div class="risk-lbl">RISK</div>
+        </div>
+
+        <div class="result-banner" id="result-banner">PHISHING VERDICT</div>
+        
+        <div class="card">
+          <div class="card-title">Threat Indicators</div>
+          <ul class="reasons-list" id="reasons-list">
+            <!-- Populated via script -->
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div class="tab-content" id="content-settings">
+      <div class="card">
+        <div class="card-title">Platform Access Token</div>
+        <div class="email-detail"><strong>(OPTIONAL)</strong> Paste your authorization key from the dashboard profile settings to log scan outcomes directly to your account.</div>
+        <input type="password" class="input-field" id="token-input" placeholder="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+        <button class="btn" id="btn-save-settings" style="margin-top: 10px; font-size: 10px; padding: 6px;">SAVE TOKEN</button>
+      </div>
+    </div>
+
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
