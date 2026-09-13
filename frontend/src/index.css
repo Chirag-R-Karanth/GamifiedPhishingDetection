@@ -1,0 +1,93 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  body {
+    @apply bg-cyber-bg text-cyber-text font-mono overflow-x-hidden;
+    background-image: 
+      radial-gradient(circle at 50% 50%, rgba(17, 24, 39, 0.4) 0%, rgba(3, 7, 18, 1) 100%),
+      linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 20px 20px, 20px 20px;
+    background-attachment: fixed;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(3, 7, 18, 0.9);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 102, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 102, 0.6);
+}
+
+/* Glassmorphism Card styling */
+.cyber-glass {
+  background: rgba(17, 24, 39, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cyber-glass-green {
+  background: rgba(9, 22, 18, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 255, 102, 0.2);
+  box-shadow: 0 0 15px rgba(0, 255, 102, 0.05);
+}
+
+.cyber-glass-blue {
+  background: rgba(9, 18, 22, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.05);
+}
+
+/* Terminal typing effect cursor */
+.terminal-cursor::after {
+  content: '█';
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from, to { color: transparent }
+  50% { color: #00ff66 }
+}
+
+/* CRT Scanlines Overlay */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.15;
+}
+
+/* Glowing text */
+.glow-text-green {
+  text-shadow: 0 0 8px rgba(0, 255, 102, 0.6);
+}
+
+.glow-text-blue {
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+}
+
+/* Custom layout elements */
+.radar-grid {
+  background-image: 
+    radial-gradient(circle, transparent 30%, rgba(0, 255, 102, 0.02) 31%, rgba(0, 255, 102, 0.02) 40%, transparent 41%),
+    radial-gradient(circle, transparent 60%, rgba(0, 255, 102, 0.02) 61%, rgba(0, 255, 102, 0.02) 70%, transparent 71%);
+}
